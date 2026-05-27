@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz App — Tanzim Hossain Ayon</title>
+<link rel="stylesheet" href="style.css">
+<!-- BACKGROUND MUSIC -->
+<audio id="bg-music" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_942571def6.mp3" type="audio/mpeg">
+</audio>
+<button id="music-btn" onclick="toggleMusic()" title="Toggle Music">🎵</button>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="grid"></div>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<div class="app">
+
+  <!-- START SCREEN -->
+  <div id="start-screen" class="screen active">
+    <div class="start-content">
+      <div class="logo-ring">
+        <div class="logo-icon">🧠</div>
+      </div>
+      <h1 class="title">Quiz<span class="grad">Master</span></h1>
+      <p class="subtitle">Test your knowledge across AI, Science, Tech & more!</p>
+      <div class="category-grid">
+        <button class="cat-btn active" data-cat="all" onclick="selectCat(this)">🌐 All Topics</button>
+        <button class="cat-btn" data-cat="ai" onclick="selectCat(this)">🤖 AI & ML</button>
+        <button class="cat-btn" data-cat="science" onclick="selectCat(this)">🔬 Science</button>
+        <button class="cat-btn" data-cat="tech" onclick="selectCat(this)">💻 Technology</button>
+        <button class="cat-btn" data-cat="math" onclick="selectCat(this)">📐 Mathematics</button>
+        <button class="cat-btn" data-cat="general" onclick="selectCat(this)">🌍 General</button>
+      </div>
+      <button class="start-btn" onclick="startQuiz()">
+        <span>Start Quiz</span>
+        <span class="btn-arrow">→</span>
+      </button>
+      <div class="built-by">Built by <span>Tanzim Hossain Ayon</span> · BRAC University</div>
+    </div>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div id="quiz-screen" class="screen">
+    <div class="quiz-header">
+      <div class="q-info">
+        <span id="q-num">Question 1</span>
+        <span id="q-cat">AI & ML</span>
+      </div>
+      <div class="score-box">
+        <span class="score-label">Score</span>
+        <span id="score-val">0</span>
+      </div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar"><div id="progress" class="progress-fill"></div></div>
+      <span id="progress-txt">0/10</span>
+    </div>
+
+    <div class="timer-wrap">
+      <svg class="timer-ring" viewBox="0 0 60 60">
+        <circle cx="30" cy="30" r="26" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3"/>
+        <circle id="timer-circle" cx="30" cy="30" r="26" fill="none" stroke="url(#tg)" stroke-width="3" stroke-dasharray="163" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 30 30)"/>
+        <defs><linearGradient id="tg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#4f8ef7"/><stop offset="100%" stop-color="#00e5ff"/></linearGradient></defs>
+      </svg>
+      <span id="timer-num">15</span>
+    </div>
+
+    <div class="question-card" id="q-card">
+      <p id="question-text">Loading question...</p>
+    </div>
+
+    <div class="options-grid" id="options"></div>
+
+    <div class="hint-row">
+      <button class="hint-btn" id="hint-btn" onclick="useHint()">💡 Hint <span id="hints-left">(3 left)</span></button>
+      <button class="skip-btn" onclick="skipQuestion()">⏭ Skip</button>
+    </div>
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div id="result-screen" class="screen">
+    <div class="result-content">
+      <div id="result-emoji" class="result-emoji">🏆</div>
+      <h2 id="result-title">Excellent!</h2>
+      <p id="result-msg">You scored amazingly!</p>
+      <div class="result-stats">
+        <div class="r-stat"><div class="r-val" id="r-score">0</div><div class="r-lbl">Score</div></div>
+        <div class="r-stat"><div class="r-val" id="r-correct">0</div><div class="r-lbl">Correct</div></div>
+        <div class="r-stat"><div class="r-val" id="r-time">0s</div><div class="r-lbl">Avg Time</div></div>
+        <div class="r-stat"><div class="r-val" id="r-streak">0</div><div class="r-lbl">Best Streak</div></div>
+      </div>
+      <div class="result-bar-wrap">
+        <div class="result-bar"><div id="result-bar-fill" class="result-bar-fill"></div></div>
+        <span id="result-pct">0%</span>
+      </div>
+      <div class="result-btns">
+        <button class="start-btn" onclick="restartQuiz()"><span>Play Again</span><span class="btn-arrow">↺</span></button>
+        <button class="ghost-btn" onclick="goHome()">🏠 Home</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
